@@ -17,15 +17,15 @@ namespace TicTacToe
         private IDictionary<string, Token> _tiles = new Dictionary<string, Token>
         {
             // TODO: Candidate for algo/generation
-            { "A1", Token.Empty },
-            { "A2", Token.Empty },
-            { "A3", Token.Empty },
-            { "B1", Token.Empty },
-            { "B2", Token.Empty },
-            { "B3", Token.Empty },
-            { "C1", Token.Empty },
-            { "C2", Token.Empty },
-            { "C3", Token.Empty },
+            { "{1,1}", Token.Empty },
+            { "{2,1}", Token.Empty },
+            { "{3,1}", Token.Empty },
+            { "{1,2}", Token.Empty },
+            { "{2,2}", Token.Empty },
+            { "{3,2}", Token.Empty },
+            { "{1,3}", Token.Empty },
+            { "{2,3}", Token.Empty },
+            { "{3,3}", Token.Empty },
         };
 
         public static Board Create()
@@ -50,7 +50,7 @@ namespace TicTacToe
 
         public void PlaceToken(string tileName, Token token)
         {
-            if(_tiles[tileName] != Token.Empty)
+            if (_tiles[tileName] != Token.Empty)
             {
                 throw new TileTakenException();
             }
@@ -62,14 +62,14 @@ namespace TicTacToe
             // TODO: Candidate for algo/generation
             List<List<string>> winLines = new List<List<string>>
             {
-                new List<string> { "A1", "A2", "A3" },
-                new List<string> { "B1", "B2", "B3" },
-                new List<string> { "C1", "C2", "C3" },
-                new List<string> { "A1", "B1", "C1" },
-                new List<string> { "A2", "B2", "C2" },
-                new List<string> { "A3", "B3", "C3" },
-                new List<string> { "A1", "B2", "C3" },
-                new List<string> { "A3", "B2", "C1" }
+                new List<string> { "{1,1}", "{2,1}", "{3,1}" },
+                new List<string> { "{1,2}", "{2,2}", "{3,2}" },
+                new List<string> { "{1,3}", "{2,3}", "{3,3}" },
+                new List<string> { "{1,1}", "{1,2}", "{1,3}" },
+                new List<string> { "{2,1}", "{2,2}", "{2,3}" },
+                new List<string> { "{3,1}", "{3,2}", "{3,3}" },
+                new List<string> { "{1,1}", "{2,2}", "{3,3}" },
+                new List<string> { "{3,1}", "{2,2}", "{1,3}" }
             };
 
             foreach (var winLine in winLines)
@@ -99,7 +99,15 @@ namespace TicTacToe
 
             List<string> cells = new List<string>
             {
-                "A1", "A2", "A3", "B1", "B2", "B3","C1", "C2", "C3"
+                "{1,1}",
+                "{2,1}",
+                "{3,1}",
+                "{1,2}",
+                "{2,2}",
+                "{3,2}",
+                "{1,3}",
+                "{2,3}",
+                "{3,3}"
             };
 
             foreach (var cell in cells)

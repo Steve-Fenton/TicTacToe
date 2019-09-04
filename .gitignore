@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/TicTacToe/v15/.suo
+/.vs/slnx.sqlite
+/TicTacToe/.vs/TicTacToe/v15
+/TicTacToe/TicTacToe/bin/Debug/netstandard2.0
+/TicTacToe/TicTacToe/obj
+/TicTacToe/TicTacToeTests/bin/Debug/netcoreapp2.2
+/TicTacToe/TicTacToeTests/obj

@@ -1,31 +1,34 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TicTacToe
 {
-    //public struct Tile
-    //{
-    //    public int x, y;
+    // This should be called Square, a Tile is a square plus a token
+    public struct Tile
+    {
+        public int x, y;
 
-    //    public Tile(int x1, int y1)
-    //    {
-    //        x = x1;
-    //        y = y1;
-    //    }
-    //}
+        public Tile(int x1, int y1)
+        {
+            x = x1;
+            y = y1;
+        }
+    }
+
     public class Board
     {
-        private IDictionary<string, Token> _tiles = new Dictionary<string, Token>
+        private IDictionary<Tile, Token> _tiles = new Dictionary<Tile, Token>
         {
             // TODO: Candidate for algo/generation
-            { "{1,1}", Token.Empty },
-            { "{2,1}", Token.Empty },
-            { "{3,1}", Token.Empty },
-            { "{1,2}", Token.Empty },
-            { "{2,2}", Token.Empty },
-            { "{3,2}", Token.Empty },
-            { "{1,3}", Token.Empty },
-            { "{2,3}", Token.Empty },
-            { "{3,3}", Token.Empty },
+            { new Tile(1,1), Token.Empty },
+            { new Tile(2,1), Token.Empty },
+            { new Tile(3,1), Token.Empty },
+            { new Tile(1,2), Token.Empty },
+            { new Tile(2,2), Token.Empty },
+            { new Tile(3,2), Token.Empty },
+            { new Tile(1,3), Token.Empty },
+            { new Tile(2,3), Token.Empty },
+            { new Tile(3,3), Token.Empty },
         };
 
         public static Board Create()
@@ -38,87 +41,91 @@ namespace TicTacToe
             return _tiles.Count;
         }
 
-        public string GetTileNames()
+        public IEnumerable<Tile> GetTileKeys()
         {
-            return string.Join(",", _tiles.Keys);
+            return _tiles.Select(tile => tile.Key);
         }
 
-        public Token GetToken(string tileName)
+        public Token GetToken(Tile tile)
         {
-            return _tiles[tileName];
+            return _tiles[tile];
         }
 
-        public void PlaceToken(string tileName, Token token)
+        public void PlaceToken(Token token, Tile tile)
         {
-            if (_tiles[tileName] != Token.Empty)
+            if (_tiles[tile] != Token.Empty)
             {
                 throw new TileTakenException();
             }
-            _tiles[tileName] = token;
+
+            _tiles[tile] = token;
         }
 
         public Token GetGameResult()
         {
             // TODO: Candidate for algo/generation
-            List<List<string>> winLines = new List<List<string>>
+            List<List<Tile>> winLines = new List<List<Tile>>
             {
-                new List<string> { "{1,1}", "{2,1}", "{3,1}" },
-                new List<string> { "{1,2}", "{2,2}", "{3,2}" },
-                new List<string> { "{1,3}", "{2,3}", "{3,3}" },
-                new List<string> { "{1,1}", "{1,2}", "{1,3}" },
-                new List<string> { "{2,1}", "{2,2}", "{2,3}" },
-                new List<string> { "{3,1}", "{3,2}", "{3,3}" },
-                new List<string> { "{1,1}", "{2,2}", "{3,3}" },
-                new List<string> { "{3,1}", "{2,2}", "{1,3}" }
+                new List<Tile> { new Tile(1,1), new Tile(2,1), new Tile(3,1) },
+                new List<Tile> { new Tile(1,2), new Tile(2,2), new Tile(3,2) },
+                new List<Tile> { new Tile(1,3), new Tile(2,3), new Tile(3,3) },
+                new List<Tile> { new Tile(1,1), new Tile(1,2), new Tile(1,3) },
+                new List<Tile> { new Tile(2,1), new Tile(2,2), new Tile(2,3) },
+                new List<Tile> { new Tile(3,1), new Tile(3,2), new Tile(3,3) },
+                new List<Tile> { new Tile(1,1), new Tile(2,2), new Tile(3,3) },
+                new List<Tile> { new Tile(3,1), new Tile(2,2), new Tile(1,3) }
             };
 
             foreach (var winLine in winLines)
             {
-                var a = GetToken(winLine[0]);
+                var firstToken = GetToken(winLine[0]);
 
-                if (a == Token.Empty)
+                if (firstToken == Token.Empty)
                 {
                     continue;
                 }
 
-                bool result = true;
-                foreach (var tileName in winLine)
+                bool isWinningLine = true;
+                foreach (var tile in winLine)
                 {
-                    if (GetToken(tileName) != a)
+                    if (GetToken(tile) != firstToken)
                     {
-                        result = false;
+                        isWinningLine = false;
                         break;
                     }
                 }
 
-                if (result)
+                if (isWinningLine)
                 {
-                    return a;
+                    return firstToken;
                 }
             }
 
-            List<string> cells = new List<string>
-            {
-                "{1,1}",
-                "{2,1}",
-                "{3,1}",
-                "{1,2}",
-                "{2,2}",
-                "{3,2}",
-                "{1,3}",
-                "{2,3}",
-                "{3,3}"
-            };
+            return IsInconclusive()
+                ? Token.Inconclusive
+                : Token.Empty;
+        }
+
+        private bool IsInconclusive()
+        {
+            bool isInconclusive = false;
+
+            var cells = _tiles.Select(tile => tile.Key);
 
             foreach (var cell in cells)
             {
                 if (GetToken(cell) == Token.Empty)
                 {
-                    return Token.Inconclusive;
+                    isInconclusive = true;
                 }
             }
 
-            return Token.Empty;
+            return isInconclusive;
+        }
+
+        private static string TileToString(Tile tile)
+        {
+            return "{" + tile.x + "," + tile.y + "}";
         }
     }
 }

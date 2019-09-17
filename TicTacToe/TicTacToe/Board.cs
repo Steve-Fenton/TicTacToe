@@ -4,11 +4,11 @@ using System.Linq;
 namespace TicTacToe
 {
     // This should be called Square, a Tile is a square plus a token
-    public struct Tile
+    public struct Square
     {
         public int x, y;
 
-        public Tile(int x1, int y1)
+        public Square(int x1, int y1)
         {
             x = x1;
             y = y1;
@@ -17,18 +17,18 @@ namespace TicTacToe
 
     public class Board
     {
-        private IDictionary<Tile, Token> _tiles = new Dictionary<Tile, Token>
+        private IDictionary<Square, Token> _tiles = new Dictionary<Square, Token>
         {
             // TODO: Candidate for algo/generation
-            { new Tile(1,1), Token.Empty },
-            { new Tile(2,1), Token.Empty },
-            { new Tile(3,1), Token.Empty },
-            { new Tile(1,2), Token.Empty },
-            { new Tile(2,2), Token.Empty },
-            { new Tile(3,2), Token.Empty },
-            { new Tile(1,3), Token.Empty },
-            { new Tile(2,3), Token.Empty },
-            { new Tile(3,3), Token.Empty },
+            { new Square(1,1), Token.Empty },
+            { new Square(2,1), Token.Empty },
+            { new Square(3,1), Token.Empty },
+            { new Square(1,2), Token.Empty },
+            { new Square(2,2), Token.Empty },
+            { new Square(3,2), Token.Empty },
+            { new Square(1,3), Token.Empty },
+            { new Square(2,3), Token.Empty },
+            { new Square(3,3), Token.Empty },
         };
 
         public static Board Create()
@@ -41,17 +41,17 @@ namespace TicTacToe
             return _tiles.Count;
         }
 
-        public IEnumerable<Tile> GetTileKeys()
+        public IEnumerable<Square> GetTileKeys()
         {
             return _tiles.Select(tile => tile.Key);
         }
 
-        public Token GetToken(Tile tile)
+        public Token GetToken(Square tile)
         {
             return _tiles[tile];
         }
 
-        public void PlaceToken(Token token, Tile tile)
+        public void PlaceToken(Token token, Square tile)
         {
             if (_tiles[tile] != Token.Empty)
             {
@@ -64,16 +64,16 @@ namespace TicTacToe
         public Token GetGameResult()
         {
             // TODO: Candidate for algo/generation
-            List<List<Tile>> winLines = new List<List<Tile>>
+            List<List<Square>> winLines = new List<List<Square>>
             {
-                new List<Tile> { new Tile(1,1), new Tile(2,1), new Tile(3,1) },
-                new List<Tile> { new Tile(1,2), new Tile(2,2), new Tile(3,2) },
-                new List<Tile> { new Tile(1,3), new Tile(2,3), new Tile(3,3) },
-                new List<Tile> { new Tile(1,1), new Tile(1,2), new Tile(1,3) },
-                new List<Tile> { new Tile(2,1), new Tile(2,2), new Tile(2,3) },
-                new List<Tile> { new Tile(3,1), new Tile(3,2), new Tile(3,3) },
-                new List<Tile> { new Tile(1,1), new Tile(2,2), new Tile(3,3) },
-                new List<Tile> { new Tile(3,1), new Tile(2,2), new Tile(1,3) }
+                new List<Square> { new Square(1,1), new Square(2,1), new Square(3,1) },
+                new List<Square> { new Square(1,2), new Square(2,2), new Square(3,2) },
+                new List<Square> { new Square(1,3), new Square(2,3), new Square(3,3) },
+                new List<Square> { new Square(1,1), new Square(1,2), new Square(1,3) },
+                new List<Square> { new Square(2,1), new Square(2,2), new Square(2,3) },
+                new List<Square> { new Square(3,1), new Square(3,2), new Square(3,3) },
+                new List<Square> { new Square(1,1), new Square(2,2), new Square(3,3) },
+                new List<Square> { new Square(3,1), new Square(2,2), new Square(1,3) }
             };
 
             foreach (var winLine in winLines)
@@ -123,7 +123,7 @@ namespace TicTacToe
             return isInconclusive;
         }
 
-        private static string TileToString(Tile tile)
+        private static string TileToString(Square tile)
         {
             return "{" + tile.x + "," + tile.y + "}";
         }

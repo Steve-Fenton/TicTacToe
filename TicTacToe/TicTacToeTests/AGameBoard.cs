@@ -9,13 +9,6 @@ namespace Tests
     public class AGameBoard
     {
         [Test]
-        public void MindRepopulation()
-        {
-            Assert.Fail("Rename the Tile struct to Square");
-            Assert.Fail("Introduce players");
-        }
-
-        [Test]
         public void ShouldHaveNineTiles()
         {
             var board = Board.Create();
@@ -36,19 +29,19 @@ namespace Tests
         public void ShouldRememberWhereWePutTokens()
         {
             var board = Board.Create();
-            board.PlaceToken(Token.X, new Tile(2,2));
-            board.PlaceToken(Token.O, new Tile(1,3));
+            board.PlaceToken(Token.X, new Square(2,2));
+            board.PlaceToken(Token.O, new Square(1,3));
 
-            Assert.AreEqual(Token.X, board.GetToken(new Tile(2,2)));
-            Assert.AreEqual(Token.O, board.GetToken(new Tile(1,3)));
+            Assert.AreEqual(Token.X, board.GetToken(new Square(2,2)));
+            Assert.AreEqual(Token.O, board.GetToken(new Square(1,3)));
         }
 
         [Test]
         public void ShouldPreventMultipleTokensOnATile()
         {
             var board = Board.Create();
-            board.PlaceToken(Token.X, new Tile(2,2));
-            Assert.Throws<TileTakenException>(() => board.PlaceToken(Token.X, new Tile(2,2)));
+            board.PlaceToken(Token.X, new Square(2,2));
+            Assert.Throws<TileTakenException>(() => board.PlaceToken(Token.X, new Square(2,2)));
         }
     }
 }

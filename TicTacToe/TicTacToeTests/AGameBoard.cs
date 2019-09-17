@@ -41,7 +41,15 @@ namespace Tests
         {
             var board = Board.Create();
             board.PlaceToken(Token.X, new Square(2,2));
-            Assert.Throws<TileTakenException>(() => board.PlaceToken(Token.X, new Square(2,2)));
+            Assert.Throws<TileTakenException>(() => board.PlaceToken(Token.O, new Square(2,2)));
+        }
+
+        [Test]
+        public void ShouldPreventRepetitiveTokens()
+        {
+            var board = Board.Create();
+            board.PlaceToken(Token.X, new Square(2, 1));
+            Assert.Throws<TokenRepeatException>(() => board.PlaceToken(Token.X, new Square(2, 2)));
         }
     }
 }

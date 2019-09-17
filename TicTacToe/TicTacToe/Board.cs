@@ -17,6 +17,7 @@ namespace TicTacToe
 
     public class Board
     {
+        private Token LastPreviousToken = Token.Empty;
         private IDictionary<Square, Token> _tiles = new Dictionary<Square, Token>
         {
             // TODO: Candidate for algo/generation
@@ -57,6 +58,13 @@ namespace TicTacToe
             {
                 throw new TileTakenException();
             }
+
+            if(token == LastPreviousToken)
+            {
+                throw new TokenRepeatException();
+            }
+
+            LastPreviousToken = token;
 
             _tiles[tile] = token;
         }

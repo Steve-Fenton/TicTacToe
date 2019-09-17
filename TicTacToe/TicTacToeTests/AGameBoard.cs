@@ -36,20 +36,35 @@ namespace Tests
             Assert.AreEqual(Token.O, board.GetToken(new Square(1,3)));
         }
 
-        [Test]
-        public void ShouldPreventMultipleTokensOnATile()
+        [TestCase("X")]
+        [TestCase("O")]
+        public void ShouldPreventMultipleTokensOnATile(string tokenName)
         {
+            Token token = MapTokenName(tokenName);
+
             var board = Board.Create();
-            board.PlaceToken(Token.X, new Square(2,2));
-            Assert.Throws<TileTakenException>(() => board.PlaceToken(Token.O, new Square(2,2)));
+            board.PlaceToken(token, new Square(2,2));
+            Assert.Throws<TileTakenException>(() => board.PlaceToken(token, new Square(2,2)));
         }
 
-        [Test]
-        public void ShouldPreventRepetitiveTokens()
+
+        [TestCase("X")]
+        [TestCase("O")]
+        public void ShouldPreventRepetitiveTokens(string tokenName)
         {
+            Token token = MapTokenName(tokenName);
+
             var board = Board.Create();
-            board.PlaceToken(Token.X, new Square(2, 1));
-            Assert.Throws<TokenRepeatException>(() => board.PlaceToken(Token.X, new Square(2, 2)));
+            board.PlaceToken(token, new Square(2, 1));
+            Assert.Throws<TokenRepeatException>(() => board.PlaceToken(token, new Square(2, 2)));
+        }
+
+        private Token MapTokenName(string tokenName)
+        {
+            Token token = (tokenName == "X")
+                 ? Token.X
+                 : Token.O;
+            return token;
         }
     }
 }

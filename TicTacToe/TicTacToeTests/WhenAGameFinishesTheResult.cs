@@ -8,7 +8,7 @@ namespace Tests
         [Test]
         public void ShouldBeInconclusiveIfThereIsNoWinnerAndEmptyTiles()
         {
-            var board = Board.Create();
+            var board = Board.Create(3,3);
             board.PlaceToken(Token.O, new Square(1,2));
             board.PlaceToken(Token.X, new Square(3,1));
             board.PlaceToken(Token.O, new Square(3,2));
@@ -20,7 +20,7 @@ namespace Tests
         [Test]
         public void ShouldBeADrawIfAllTilesAreTakenAndThereIsNoWinner()
         {
-            var board = Board.Create();
+            var board = Board.Create(3,3);
             board.PlaceToken(Token.X, new Square(1,1));
             board.PlaceToken(Token.O, new Square(2,1));
             board.PlaceToken(Token.X, new Square(3,1));
@@ -37,7 +37,7 @@ namespace Tests
         [Test]
         public void ShouldBeAWinForXIfXHasThreeTilesInARowDiagonally()
         {
-            var board = Board.Create();
+            var board = Board.Create(3,3);
             board.PlaceToken(Token.X, new Square(1,1));
             board.PlaceToken(Token.O, new Square(2,3));
             board.PlaceToken(Token.X, new Square(3,1));
@@ -50,7 +50,7 @@ namespace Tests
         [Test]
         public void ShouldBeAWinForOIfOHasThreeTilesInARowDiagonally()
         {
-            var board = Board.Create();
+            var board = Board.Create(3,3);
             board.PlaceToken(Token.O, new Square(1,1));
             board.PlaceToken(Token.X, new Square(3,1));
             board.PlaceToken(Token.O, new Square(3,3));
@@ -63,7 +63,7 @@ namespace Tests
         [Test]
         public void ShouldBeAWinForOIfOHasThreeTilesInARowVertically()
         {
-            var board = Board.Create();
+            var board = Board.Create(3,3);
             board.PlaceToken(Token.O, new Square(1,2));
             board.PlaceToken(Token.X, new Square(3,1));
             board.PlaceToken(Token.O, new Square(3,2));

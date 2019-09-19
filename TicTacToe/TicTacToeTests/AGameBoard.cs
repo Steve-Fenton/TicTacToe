@@ -36,15 +36,13 @@ namespace Tests
             Assert.AreEqual(Token.O, board.GetToken(new Square(1,3)));
         }
 
-        [TestCase("X")]
-        [TestCase("O")]
-        public void ShouldPreventMultipleTokensOnATile(string tokenName)
+        [TestCase("X","O")]
+        [TestCase("O", "X")]
+        public void ShouldPreventMultipleTokensOnATile(string tokenNameX,string tokenNameO)
         {
-            Token token = MapTokenName(tokenName);
-
             var board = Board.Create();
-            board.PlaceToken(token, new Square(2,2));
-            Assert.Throws<TileTakenException>(() => board.PlaceToken(token, new Square(2,2)));
+            board.PlaceToken(MapTokenName(tokenNameX), new Square(2,2));
+            Assert.Throws<TileTakenException>(() => board.PlaceToken(MapTokenName(tokenNameO), new Square(2,2)));
         }
 
 

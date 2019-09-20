@@ -11,15 +11,15 @@ namespace Tests
         [Test]
         public void ShouldHaveNineTiles()
         {
-            var board = Board.Create(3,3);
+            var board = Board.Create();
 
-            Assert.AreEqual(9, board.Rows * board.Columns);
+            Assert.AreEqual(9, board.GetTileCount());
         }
 
         [Test]
         public void ShouldHaveUniqueTileNames()
         {
-            var board = Board.Create(3,3);
+            var board = Board.Create();
 
             Assert.AreEqual("{1,1},{2,1},{3,1},{1,2},{2,2},{3,2},{1,3},{2,3},{3,3}",
                 string.Join(",", board.GetTileKeys().Select(t => $"{{{t.x},{t.y}}}")));
@@ -28,7 +28,7 @@ namespace Tests
         [Test]
         public void ShouldRememberWhereWePutTokens()
         {
-            var board = Board.Create(3,3);
+            var board = Board.Create();
             board.PlaceToken(Token.X, new Square(2,2));
             board.PlaceToken(Token.O, new Square(1,3));
 
@@ -37,10 +37,10 @@ namespace Tests
         }
 
         [TestCase("X","O")]
-        [TestCase("O", "X")]
-        public void ShouldPreventMultipleTokensOnATile(string tokenNameX,string tokenNameO)
+        [TestCase("O","X")]
+        public void ShouldPreventMultipleTokensOnATile(string tokenNameX, string tokenNameO)
         {
-            var board = Board.Create(3,3);
+            var board = Board.Create();
             board.PlaceToken(MapTokenName(tokenNameX), new Square(2,2));
             Assert.Throws<TileTakenException>(() => board.PlaceToken(MapTokenName(tokenNameO), new Square(2,2)));
         }
@@ -52,7 +52,7 @@ namespace Tests
         {
             Token token = MapTokenName(tokenName);
 
-            var board = Board.Create(3,3);
+            var board = Board.Create();
             board.PlaceToken(token, new Square(2, 1));
             Assert.Throws<TokenRepeatException>(() => board.PlaceToken(token, new Square(2, 2)));
         }

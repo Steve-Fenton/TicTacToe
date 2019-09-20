@@ -17,16 +17,6 @@ namespace TicTacToe
 
     public class Board
     {
-        public int Rows { get; }
-
-        public int Columns { get; }
-
-        public Board(int _rows,int _cols)
-        {
-            Rows = _rows;
-            Columns = _cols;
-        }
-
         private Token LastPreviousToken = Token.Empty;
 
         private IDictionary<Square, Token> _tiles = new Dictionary<Square, Token>
@@ -43,9 +33,9 @@ namespace TicTacToe
             { new Square(3,3), Token.Empty },
         };
 
-        public static Board Create(int rows,int cols)
+        public static Board Create()
         {
-            return new Board(rows, cols);
+            return new Board();
         }
 
         public int GetTileCount()
